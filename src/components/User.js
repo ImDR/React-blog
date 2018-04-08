@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Loader from './loader/Loader';
 
 const Detail = (props)=>{
 	return(
@@ -20,7 +21,8 @@ class User extends React.Component{
 		super();
 
 		this.state = {
-			user:{}
+			user:{},
+			loading: true
 		}
 	}
 
@@ -28,19 +30,19 @@ class User extends React.Component{
 		const params = this.props.match.params;
 		axios.get('https://jsonplaceholder.typicode.com/users/'+params.id)
 		.then((res)=>{
-			const user = res.data;
 			this.setState({
-				user
+				user: res.data,
+				loading: false
 			});
 		})
 	}
 
 	render(){
 
-		if(Object.keys(this.state.user).length === 0){
-			return '';
+		if(this.state.loading){
+			return <Loader/>;
 		}
-		//console.log(this.props.match.url);
+
 		return(
 			<div>
 				<Detail keyName="Name" value={this.state.user.name} />

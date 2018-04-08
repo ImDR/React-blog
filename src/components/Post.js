@@ -1,14 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import Comments from './Comments'; 
+import Comments from './Comments';
+import Loader from './loader/Loader';
 
 class Post extends React.Component{
 	constructor(){
 		super();
 		this.state = {
 			post: {},
-			comments: []
+			loading: true
 		};
 	}
 
@@ -17,15 +18,16 @@ class Post extends React.Component{
 		axios.get('https://jsonplaceholder.typicode.com/posts/'+params.id)
 		.then((res)=>{
 			this.setState({
-				post: res.data
+				post: res.data,
+				loading: false
 			});
 			
 		});
 	}
 
 	render(){
-		if(Object.keys(this.state.post).length === 0){
-			return '';
+		if(this.state.loading){
+			return <Loader/>;
 		}
 
 		return(

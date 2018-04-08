@@ -1,12 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Loader from './loader/Loader';
 
 class Posts extends React.Component{
 	constructor(){
 		super();
 		this.state = {
-			posts: []
+			posts: [],
+			loading: true
 		}
 	}
 
@@ -19,12 +21,17 @@ class Posts extends React.Component{
 		axios.get(url)
 		.then((res)=>{
 			this.setState({
-				posts: res.data
+				posts: res.data,
+				loading: false
 			})
 		});
 	}
 
 	render(){
+		if(this.state.loading){
+			return <Loader/>;
+		}
+		
 		return (
 			<ul className="collection">
 			{

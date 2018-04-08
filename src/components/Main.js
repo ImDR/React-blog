@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import Users from './Users';
 import User from './User';
 import Posts from './Posts';
@@ -17,12 +17,13 @@ const Main = ()=>{
 		    	</div>
 		    	<div className="col s12 l10">
 		    		<Switch>
-		    			<Route exect path="/users" component={Users} />
+		    			<Route path="/posts" component={Posts} />
+		    			<Route path="/users" component={Users} />
 		    			<Route exect path="/user/:id/posts" component={Posts} />
 		    			<Route exect path="/user/:id" component={User} />
-		    			<Route exect path="/posts" component={Posts} />
-		    			<Route exect path="/post/:id" component={Post} />
-		    			<Route exect path="/comments" component={Comments} />
+		    			<Route path="/post/:id" component={Post} />
+		    			<Route path="/comments" component={Comments} />
+		    			<Route exact path="/" render={() => (<Redirect to="/posts" />)} />
 		    		</Switch>
 		    	</div>
 			</div>

@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Loader from './loader/Loader';
 
 class Comments extends React.Component{
 	constructor(props){
 		super(props);
 		this.state ={
 			comments: [],
-			isPost: (this.props.postId===undefined)? false: true
+			isPost: (this.props.postId===undefined)? false: true,
+			loading: true
 		}
 	}
 
@@ -19,12 +21,18 @@ class Comments extends React.Component{
 		axios.get(url)
 		.then((res)=>{
 			this.setState({
-				comments: res.data
+				comments: res.data,
+				loading: false
 			});
 		});
 	}
 
 	render(){
+
+		if(this.state.loading){
+			return <Loader/>;
+		}
+
 		return(
 			<ul className="collection with-header">
 				<li className="collection-header"><h4>Comments</h4></li>

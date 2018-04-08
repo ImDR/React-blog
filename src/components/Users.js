@@ -1,12 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import Loader from './loader/Loader';
 
 class Users extends React.Component{
 	constructor(){
 		super();
 		this.state = {
-			users:[]
+			users:[],
+			loading: true
 		}
 	}
 
@@ -14,13 +16,17 @@ class Users extends React.Component{
 		axios.get('https://jsonplaceholder.typicode.com/users')
 		.then((res)=>{
 			this.setState({
-				users: res.data
+				users: res.data,
+				loading: false
 			});
 			
 		});
 	}
 
 	render(){
+		if(this.state.loading){
+			return <Loader/>;
+		}
 		return(
 			<div className="row">
 				{
